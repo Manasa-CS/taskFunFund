@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">TaskFunFund</string>
+    <string name="title_activity_main">TaskFunFund</string>
+    <string name="package_name">com.taskfunfund.app</string>
+    <string name="custom_url_scheme">com.taskfunfund.app</string>
+</resources>

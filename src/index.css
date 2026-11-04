@@ -1,0 +1,95 @@
+@import 'tailwindcss';
+
+@import '@fontsource/baloo-2/latin-400.css';
+@import '@fontsource/baloo-2/latin-500.css';
+@import '@fontsource/baloo-2/latin-600.css';
+@import '@fontsource/baloo-2/latin-700.css';
+@import '@fontsource/baloo-2/latin-800.css';
+@import '@fontsource/nunito/latin-400.css';
+@import '@fontsource/nunito/latin-600.css';
+@import '@fontsource/nunito/latin-700.css';
+@import '@fontsource/nunito/latin-800.css';
+
+@theme {
+  --font-display: 'Baloo 2', 'Nunito', system-ui, sans-serif;
+  --font-sans: 'Nunito', system-ui, sans-serif;
+
+  /* Warm, playful palette */
+  --color-sunny-50: #fffbeb;
+  --color-sunny-100: #fff3c4;
+  --color-sunny-300: #ffe066;
+  --color-sunny-400: #ffd43b;
+  --color-sunny-500: #fcc419;
+  --color-sunny-600: #f59f00;
+
+  --color-sky-50: #eef9ff;
+  --color-sky-100: #d3eeff;
+  --color-sky-300: #7cd4fd;
+  --color-sky-400: #3bc0fa;
+  --color-sky-500: #15aae8;
+  --color-sky-600: #0d8cc4;
+
+  --color-mint-50: #edfdf6;
+  --color-mint-100: #ccfbe6;
+  --color-mint-300: #76eec0;
+  --color-mint-400: #3ddba3;
+  --color-mint-500: #1cc08a;
+  --color-mint-600: #119a6e;
+
+  --color-coral-50: #fff1ee;
+  --color-coral-100: #ffdcd3;
+  --color-coral-300: #ffa98f;
+  --color-coral-400: #ff8562;
+  --color-coral-500: #fa5f39;
+  --color-coral-600: #e23f1c;
+
+  --color-grape-50: #f8f0ff;
+  --color-grape-100: #ecdcff;
+  --color-grape-300: #cb9bfa;
+  --color-grape-400: #b374f5;
+  --color-grape-500: #9951e8;
+  --color-grape-600: #7c35c6;
+
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-sunny-50);
+  min-height: 100svh;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Native-app feel: no overscroll bounce, no accidental text selection on taps */
+html,
+body {
+  overscroll-behavior-y: none;
+}
+
+button {
+  touch-action: manipulation;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
