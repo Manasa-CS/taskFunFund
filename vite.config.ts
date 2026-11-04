@@ -6,6 +6,7 @@ import { defineConfig } from 'vitest/config'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/taskFunFund/',
   plugins: [
     react(),
     tailwindcss(),
@@ -20,7 +21,8 @@ export default defineConfig({
         background_color: '#fffbeb',
         display: 'standalone',
         orientation: 'portrait',
-        start_url: '/',
+        start_url: '/taskFunFund/',
+        scope: '/taskFunFund/',
         icons: [
           { src: '/icons/icon-48.webp', sizes: '48x48', type: 'image/webp' },
           { src: '/icons/icon-72.webp', sizes: '72x72', type: 'image/webp' },
