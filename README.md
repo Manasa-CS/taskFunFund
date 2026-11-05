@@ -14,6 +14,63 @@ print certificates and approve rewards.
 Tone throughout: warm and encouraging, never shaming. Missing a task just means not
 earning — nothing is ever taken away.
 
+## Architecture
+
+### App & data layers
+
+```mermaid
+flowchart TD
+    UI["Feature UI<br/>kids · tasks · activities · fun · games · fund · shop · reports · certificates"]
+    Store["Zustand store<br/>one slice per domain · schemaVersion + migrate()"]
+    Adapter{"Storage adapter"}
+    Web[("IndexedDB<br/>via idb-keyval — Web")]
+    Native[("Capacitor Preferences<br/>Android / iOS")]
+    Backup["JSON export / import<br/>Parent → Settings → Backup"]
+
+    UI --> Store
+    Store --> Adapter
+    Adapter --> Web
+    Adapter --> Native
+    Store --> Backup
+
+    classDef ui fill:#5EEAD4,stroke:#0F766E,stroke-width:2px,color:#0F172A
+    classDef store fill:#C4B5FD,stroke:#6D28D9,stroke-width:2px,color:#0F172A
+    classDef adapter fill:#FDBA74,stroke:#C2410C,stroke-width:2px,color:#0F172A
+    classDef storage fill:#86EFAC,stroke:#15803D,stroke-width:2px,color:#0F172A
+    classDef backup fill:#FDE68A,stroke:#B45309,stroke-width:2px,color:#0F172A
+
+    class UI ui
+    class Store store
+    class Adapter adapter
+    class Web,Native storage
+    class Backup backup
+```
+
+Everything is local-first — there's no server or account — so the storage adapter is the only
+place that knows whether it's running on web or native.
+
+### Points → stars → money
+
+```mermaid
+flowchart LR
+    Task["Task / activity completed"] --> Points["Points<br/>(the only stored value)"]
+    Points -- "rate: pointsPerStar" --> Stars["Stars"]
+    Stars -- "rate: starsPerCent" --> Money["Fund balance"]
+
+    classDef task fill:#CBD5E1,stroke:#334155,stroke-width:2px,color:#0F172A
+    classDef points fill:#93C5FD,stroke:#1D4ED8,stroke-width:2px,color:#0F172A
+    classDef stars fill:#FDE68A,stroke:#B45309,stroke-width:2px,color:#0F172A
+    classDef money fill:#86EFAC,stroke:#15803D,stroke-width:2px,color:#0F172A
+
+    class Task task
+    class Points points
+    class Stars stars
+    class Money money
+```
+
+Stars and money are never persisted — they're recalculated from points and the current rates
+every time a screen renders, so a parent changing a rate later never rewrites history.
+
 ## Running it
 
 ### Web
