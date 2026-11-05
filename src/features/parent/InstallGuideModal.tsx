@@ -1,6 +1,6 @@
 import { Button } from '@/components/Button'
 import { Modal } from '@/components/Modal'
-import { getInstallPlatform } from '@/lib/install'
+import { getInstallPlatform, useInstallPrompt } from '@/lib/install'
 
 interface InstallGuideModalProps {
   open: boolean
@@ -10,6 +10,7 @@ interface InstallGuideModalProps {
 /** Platform-specific step-by-step instructions for adding TaskFunFund to the home screen. */
 export function InstallGuideModal({ open, onClose }: InstallGuideModalProps) {
   const platform = getInstallPlatform()
+  const { canPromptInstall, promptInstall } = useInstallPrompt()
 
   return (
     <Modal open={open} onClose={onClose} title="📲 Install TaskFunFund">
@@ -19,7 +20,20 @@ export function InstallGuideModal({ open, onClose }: InstallGuideModalProps) {
           family's data safer from the browser clearing it.
         </p>
 
-        {platform === 'ios' && (
+        {canPromptInstall && (
+          <Button
+            variant="mint"
+            className="w-full"
+            onClick={async () => {
+              await promptInstall()
+              onClose()
+            }}
+          >
+            Install now
+          </Button>
+        )}
+
+        {!canPromptInstall && platform === 'ios' && (
           <ol className="list-decimal space-y-2 pl-5 text-sm">
             <li>
               Tap the <strong>Share</strong> button (⬆️ the square with an arrow) in Safari's toolbar.
@@ -33,7 +47,7 @@ export function InstallGuideModal({ open, onClose }: InstallGuideModalProps) {
           </ol>
         )}
 
-        {platform === 'android' && (
+        {!canPromptInstall && platform === 'android' && (
           <ol className="list-decimal space-y-2 pl-5 text-sm">
             <li>
               Tap the <strong>⋮</strong> menu in the top corner of your browser.
@@ -45,7 +59,7 @@ export function InstallGuideModal({ open, onClose }: InstallGuideModalProps) {
           </ol>
         )}
 
-        {platform === 'other' && (
+        {!canPromptInstall && platform === 'other' && (
           <p className="text-sm">
             Look for an install icon in your browser's address bar, or check its menu for an
             "Install TaskFunFund" or "Add to Home Screen" option.
